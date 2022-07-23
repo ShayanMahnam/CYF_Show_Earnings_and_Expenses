@@ -1,0 +1,79 @@
+<html>
+<p> please write only numbers!</p>
+      <input id="cost"/>
+<button id="submit">submit</button>
+<p>Earnings:<span id="total_earnings"></span></p>
+<ul id="earnings"></ul>
+<p>Expenses:<span id="total_expenses"></span></p>
+<ul id="expense"></ul>
+<p>Balance:<span id="total"></span></p><p id="text"></p>
+<script>
+    var input, earnings, expense, balance;
+
+// Describe this function...
+function balance2() {
+  if(--window.LoopTrap <= 0) throw "Infinite loop.";
+  let element_total = document.getElementById('total');
+  element_total.innerText = balance.reduce((a,b) => a+b, 0);
+  element_total.style.backgroundColor = '#ff6666';
+}
+
+// Describe this function...
+function check_amount() {
+  if(--window.LoopTrap <= 0) throw "Infinite loop.";
+  if (input.slice(-1)[0] >= 0) {
+    earnings.unshift(input.pop());
+    let element_earnings = document.getElementById('earnings');
+    let new_li = document.createElement('li');
+    new_li.innerText = earnings[0];
+    new_li.style.backgroundColor = '#66ff99';
+
+    element_earnings.appendChild(new_li);
+    let element_total_earnings = document.getElementById('total_earnings');
+    element_total_earnings.innerText = earnings.reduce((a,b) => a+b, 0);
+    balance.unshift(earnings[0]);
+  } else if (input.slice(-1)[0] < 0) {
+    expense.unshift(input.pop());
+    let element_expense = document.getElementById('expense');
+    let new_li2 = document.createElement('li');
+    new_li2.innerText = expense[0];
+    new_li2.style.backgroundColor = '#33ccff';
+
+    element_expense.appendChild(new_li2);
+    let element_total_expenses = document.getElementById('total_expenses');
+    element_total_expenses.innerText = expense.reduce((a,b) => a+b, 0);
+    balance.unshift(expense[0]);
+  }
+}
+
+function getNumberOrString(value) {
+  // Convert a string value to a number if possible
+  let number_value = Number(value);
+  if (Number.isNaN(number_value)) {
+    return value
+  } else {
+    return number_value
+  }
+}
+
+// Describe this function...
+function input_counting() {
+  if(--window.LoopTrap <= 0) throw "Infinite loop.";
+  input.unshift(getNumberOrString(document.getElementById('cost').value));
+}
+
+
+input = [];
+earnings = [];
+expense = [];
+balance = [];
+
+
+document.getElementById('submit').addEventListener('click', (event) => {
+  input_counting();
+  check_amount();
+  balance2();
+
+});
+</script>
+</html>
